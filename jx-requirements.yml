@@ -1,36 +1,93 @@
 autoUpdate:
   enabled: true
-  schedule: '0 0 * * *'
+  schedule: 0 0 * * *
+bootConfigURL: https://github.com/cloudbees/arcalos-boot-config.git
 cluster:
-  clusterName: ""
-  environmentGitOwner: ""
-  project: ""
+  clusterName: pr-52-9abc
+  environmentGitOwner: jenkins-x-bot-test
+  environmentGitPublic: true
+  externalDNSSAName: pr-52-9abc-dn
+  gitKind: github
+  gitName: github
+  gitPublic: true
+  gitServer: https://github.com
+  gke:
+    projectNumber: "541991347103"
+  kanikoSAName: pr-52-9abc-ko
+  namespace: jx
+  project: aps-pr-52-9abc
   provider: gke
-  zone: ""
-gitops: true
+  registry: gcr.io
+  vaultName: pr-52-9abc
+  vaultSAName: pr-52-9abc-vt
+  zone: us-east1-c
+environments:
+- ingress:
+    cloud_dns_secret_name: external-dns-gcp-sa
+    domain: aps-pr-52-9abc.jxaas.live
+    domainIssuerURL: https://jx-tenant-service-jx.aps-lordlemon.jxaas.live
+    externalDNS: true
+    namespaceSubDomain: -jx.
+    tls:
+      email: jenkins-x@cloudbees.com
+      enabled: true
+      production: false
+  key: dev
+- ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: staging
+- ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: production
 githubApp:
   enabled: false
-environments:
-- key: dev
-- key: staging
-- key: production
+gitops: true
 ingress:
-  domain: ""
-  externalDNS: false
+  cloud_dns_secret_name: external-dns-gcp-sa
+  domain: aps-pr-52-9abc.jxaas.live
+  domainIssuerURL: https://jx-tenant-service-jx.aps-lordlemon.jxaas.live
+  externalDNS: true
+  namespaceSubDomain: -jx.
   tls:
     email: jenkins-x@cloudbees.com
     enabled: true
     production: false
 kaniko: true
+repository: nexus
 secretStorage: vault
 storage:
+  backup:
+    enabled: true
+    url: gs://aps-pr-52-9abc-backup
   logs:
-    enabled: false
-    url: ""
+    enabled: true
+    url: gs://aps-pr-52-9abc-lts
   reports:
     enabled: false
     url: ""
   repository:
     enabled: false
     url: ""
+vault:
+  bucket: aps-pr-52-9abc-vault
+  key: pr-52-9abc-crypto-key
+  keyring: pr-52-9abc-keyring
+  name: pr-52-9abc
+  serviceAccount: pr-52-9abc-vt
+velero: {}
+versionStream:
+  ref: v0.0.87
+  url: https://github.com/cloudbees/arcalos-jenkins-x-versions.git
 webhook: prow
